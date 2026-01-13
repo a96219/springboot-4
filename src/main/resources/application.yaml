@@ -1,0 +1,6 @@
+spring:
+  servlet:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force-response: true
