@@ -1,6 +1,5 @@
 package com.lwd;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Test {
 
-    @GetMapping("test")
+    @GetMapping(value = "test", produces = "text/plain;charset=GBK")
     public String test(@NotNull Long id) {
-        return "test api";
+        return "id的值为" + id;
     }
 }

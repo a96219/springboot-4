@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
 
@@ -23,8 +24,21 @@ public class LogFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        filterChain.doFilter(request, response);
+        var responseWrapper = new ContentCachingResponseWrapper(response);
 
-        log.info("charSet:{}", response.getCharacterEncoding());
+        filterChain.doFilter(request, responseWrapper);
+
+        var characterEncoding = responseWrapper.getCharacterEncoding();
+        String responseBody;
+        var contentAsByteArray = responseWrapper.getContentAsByteArray();
+        if (contentAsByteArray.length == 0) {
+            responseBody = null;
+        } else {
+            responseBody = new String(contentAsByteArray, characterEncoding);
+        }
+
+        log.info("charSet:{}, response:{}", characterEncoding, responseBody);
+
+        responseWrapper.copyBodyToResponse();
     }
 }
