@@ -1,0 +1,4 @@
+spring:
+  servlet:
+    encoding:
+      charset: GBK

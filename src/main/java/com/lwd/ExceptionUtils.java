@@ -2,14 +2,10 @@ package com.lwd;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ElementKind;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice
-public class GlobalExceptionAdvice {
+public class ExceptionUtils {
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public String constraintViolationException(ConstraintViolationException exception) {
+    public static String message(ConstraintViolationException exception) {
         return exception.getConstraintViolations()
                 .stream()
                 .findFirst()
@@ -24,5 +20,8 @@ public class GlobalExceptionAdvice {
                     return msg;
                 })
                 .orElse(exception.getMessage());
+    }
+
+    private ExceptionUtils() {
     }
 }

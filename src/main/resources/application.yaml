@@ -1,6 +1,9 @@
 spring:
   servlet:
     encoding:
-      charset: GBK
+      charset: UTF-8
       enabled: true
       force-response: true
+
+  profiles:
+    active: ${profile:default}
