@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Test {
 
-    @GetMapping(value = "test", produces = "text/plain;charset=GBK")
+    @GetMapping(value = "test")
     public String test(@NotNull Long id) {
         return "id的值为" + id;
     }

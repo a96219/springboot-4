@@ -2,8 +2,6 @@ package com.lwd;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ElementKind;
-import org.jspecify.annotations.Nullable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -11,8 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionAdvice {
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ExceptionBodyDto> constraintViolationException(ConstraintViolationException exception) {
-        var message = exception.getConstraintViolations()
+    public String constraintViolationException(ConstraintViolationException exception) {
+        return exception.getConstraintViolations()
                 .stream()
                 .findFirst()
                 .map(constraintViolation -> {
@@ -26,10 +24,5 @@ public class GlobalExceptionAdvice {
                     return msg;
                 })
                 .orElse(exception.getMessage());
-        return ResponseEntity.ok()
-                .body(new ExceptionBodyDto(message, null));
-    }
-
-    public record ExceptionBodyDto(@Nullable String message, @Nullable Object data) {
     }
 }

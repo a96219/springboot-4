@@ -1,6 +1,6 @@
 spring:
   servlet:
     encoding:
-      charset: utf-8
+      charset: GBK
       enabled: true
       force-response: true
